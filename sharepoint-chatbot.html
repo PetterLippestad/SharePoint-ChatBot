@@ -321,12 +321,16 @@
         <svg viewBox="0 0 24 24"><polyline points="22 2 11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       </button>
     </div>
-    <div class="input-footer">Powered by <span>Claude</span> · Searches your SharePoint in real time</div>
+    <div class="input-footer">Powered by <span>ChatGPT</span> · Searches your SharePoint in real time</div>
   </div>
 </div>
 
 <script>
-const SYSTEM_PROMPT = `You are a helpful SharePoint AI Assistant for Summa Equity. Help users find information in Summa's SharePoint — documents, files, and folders. Use the Microsoft 365 tools to search, summarise clearly, and always mention file names when referencing specific documents. If nothing is found, suggest alternative search terms. Always be professional and concise.`;
+// ── CONFIG ── Replace with your OpenAI API key
+const OPENAI_API_KEY = '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';
+const MODEL = 'gpt-4o';
+
+const SYSTEM_PROMPT = `You are a helpful SharePoint AI Assistant for Summa Equity. Help users find information in Summa's SharePoint — documents, files, and folders. Search thoroughly, summarise clearly, and always mention file names when referencing specific documents. If nothing is found, suggest alternative search terms. Always be professional and concise.`;
 
 let conversationHistory = [];
 let isLoading = false;
@@ -362,15 +366,10 @@ function appendThinking() {
 
 function removeThinking() { const el = document.getElementById('thinkingRow'); if (el) el.remove(); }
 
-function appendBot(text, sources = []) {
+function appendBot(text) {
   removeThinking();
   const row = document.createElement('div'); row.className = 'msg-row bot';
   const b = document.createElement('div'); b.className = 'bubble bot'; b.textContent = text;
-  if (sources.length) {
-    const sd = document.createElement('div'); sd.className = 'sources';
-    sources.slice(0, 5).forEach(s => { const c = document.createElement('div'); c.className = 'source-chip'; c.textContent = '📄 ' + s; sd.appendChild(c); });
-    b.appendChild(sd);
-  }
   row.append(mkAvatar('bot'), b);
   document.getElementById('messages').appendChild(row); scrollToBottom();
 }
@@ -379,20 +378,6 @@ function appendError(msg) {
   removeThinking();
   const el = document.createElement('div'); el.className = 'error-msg'; el.textContent = '⚠ ' + msg;
   document.getElementById('messages').appendChild(el); scrollToBottom();
-}
-
-function extractSources(content) {
-  const sources = new Set();
-  content.forEach(block => {
-    if (block.type === 'mcp_tool_result') {
-      try {
-        const raw = block.content?.[0]?.text || '';
-        const matches = raw.match(/"(?:name|title|fileName|displayName)"\s*:\s*"([^"]+)"/g) || [];
-        matches.forEach(m => { const v = m.match(/"([^"]+)"$/)?.[1]; if (v && v.length < 80) sources.add(v); });
-      } catch (_) {}
-    }
-  });
-  return [...sources].slice(0, 5);
 }
 
 async function sendMessage() {
@@ -407,26 +392,36 @@ async function sendMessage() {
   appendThinking();
 
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const res = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': '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', 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${OPENAI_API_KEY}`
+      },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: MODEL,
         max_tokens: 1000,
-        system: SYSTEM_PROMPT,
-        messages: conversationHistory,
-        mcp_servers: [{ type: 'url', url: 'https://microsoft365.mcp.claude.com/mcp', name: 'microsoft365' }]
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          ...conversationHistory
+        ]
       })
     });
 
-    if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.error?.message || `API error ${res.status}`); }
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error?.message || `API error ${res.status}`);
+    }
 
     const data = await res.json();
-    const sources = extractSources(data.content || []);
-    const replyText = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join('\n').trim();
+    const replyText = data.choices?.[0]?.message?.content?.trim();
 
-    if (replyText) { appendBot(replyText, sources); conversationHistory.push({ role: 'assistant', content: replyText }); }
-    else { appendBot("I searched your SharePoint but couldn't find a clear answer. Try rephrasing your question."); }
+    if (replyText) {
+      appendBot(replyText);
+      conversationHistory.push({ role: 'assistant', content: replyText });
+    } else {
+      appendBot("I couldn't find a clear answer. Try rephrasing your question.");
+    }
   } catch (err) {
     appendError(err.message || 'Something went wrong. Please try again.');
   } finally {
