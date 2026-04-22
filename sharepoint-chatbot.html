@@ -8,282 +8,55 @@
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --forest:      #397467;
-    --bright:      #50B275;
-    --mint:        #A7D9CC;
-    --light-green: #C5E1CC;
-    --mint-80:     rgba(167,217,204,0.8);
-    --light-80:    rgba(197,225,204,0.8);
-    --dark:        #242424;
-    --dark-grey:   #666666;
-    --light-grey:  #CFCFCF;
-    --white:       #FFFFFF;
-    --radius:      8px;
+    --forest: #397467; --bright: #50B275; --mint: #A7D9CC; --light-green: #C5E1CC;
+    --mint-80: rgba(167,217,204,0.8); --light-80: rgba(197,225,204,0.8);
+    --dark: #242424; --dark-grey: #666666; --light-grey: #CFCFCF; --white: #FFFFFF; --radius: 8px;
   }
-
-  html, body {
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    background: var(--white);
-    font-family: Roboto, 'Helvetica Neue', Arial, sans-serif;
-    color: var(--dark);
-    font-size: 14px;
-  }
-
-  .app {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    max-height: 100vh;
-    background: var(--white);
-    overflow: hidden;
-  }
-
-  /* ── HEADER ── */
-  .header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 20px;
-    background: var(--forest);
-    flex-shrink: 0;
-  }
-
-  .header-logo {
-    width: 36px; height: 36px;
-    border-radius: var(--radius);
-    background: rgba(255,255,255,0.15);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px; color: var(--white);
-    font-family: Georgia, serif; font-weight: 700;
-    flex-shrink: 0;
-  }
-
+  html, body { height: 100%; width: 100%; overflow: hidden; background: var(--white); font-family: Roboto, 'Helvetica Neue', Arial, sans-serif; color: var(--dark); font-size: 14px; }
+  .app { display: flex; flex-direction: column; height: 100vh; max-height: 100vh; background: var(--white); overflow: hidden; }
+  .header { display: flex; align-items: center; gap: 12px; padding: 14px 20px; background: var(--forest); flex-shrink: 0; }
+  .header-logo { width: 36px; height: 36px; border-radius: var(--radius); background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--white); font-family: Georgia, serif; font-weight: 700; flex-shrink: 0; }
   .header-info { flex: 1; }
-  .header-title {
-    font-size: 14px; font-weight: 500;
-    color: var(--white);
-    font-family: Georgia, serif;
-    letter-spacing: 0.01em;
-  }
+  .header-title { font-size: 14px; font-weight: 500; color: var(--white); font-family: Georgia, serif; letter-spacing: 0.01em; }
   .header-sub { font-size: 11px; color: var(--mint); margin-top: 1px; }
-
-  .status-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--bright);
-    border: 2px solid rgba(255,255,255,0.3);
-    animation: pulse 2s infinite;
-    flex-shrink: 0;
-  }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--bright); border: 2px solid rgba(255,255,255,0.3); animation: pulse 2s infinite; flex-shrink: 0; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-
-  /* ── MESSAGES ── */
-  .messages {
-    flex: 1;
-    overflow-y: auto;
-    padding: 20px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    background: #f8faf9;
-    scroll-behavior: smooth;
-  }
-
+  .messages { flex: 1; overflow-y: auto; padding: 20px 16px; display: flex; flex-direction: column; gap: 16px; background: #f8faf9; scroll-behavior: smooth; }
   .messages::-webkit-scrollbar { width: 4px; }
   .messages::-webkit-scrollbar-thumb { background: var(--light-grey); border-radius: 2px; }
-
-  /* ── WELCOME ── */
-  .welcome {
-    text-align: center;
-    padding: 30px 20px;
-    animation: fadeUp 0.4s ease;
-  }
-
-  .welcome-icon {
-    width: 56px; height: 56px;
-    margin: 0 auto 16px;
-    border-radius: 16px;
-    background: var(--forest);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 26px; color: var(--white);
-    font-family: Georgia, serif; font-weight: 700;
-  }
-
-  .welcome h2 {
-    font-family: Georgia, serif;
-    font-size: 18px; font-weight: normal;
-    color: var(--dark); margin-bottom: 8px;
-  }
+  .welcome { text-align: center; padding: 30px 20px; animation: fadeUp 0.4s ease; }
+  .welcome-icon { width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 16px; background: var(--forest); display: flex; align-items: center; justify-content: center; font-size: 26px; color: var(--white); font-family: Georgia, serif; font-weight: 700; }
+  .welcome h2 { font-family: Georgia, serif; font-size: 18px; font-weight: normal; color: var(--dark); margin-bottom: 8px; }
   .welcome p { font-size: 13px; color: var(--dark-grey); line-height: 1.6; max-width: 300px; margin: 0 auto 20px; }
-
   .suggestions { display: flex; flex-direction: column; gap: 8px; align-items: center; }
-
-  .suggestion-btn {
-    padding: 8px 16px;
-    background: var(--white);
-    border: 1px solid var(--light-green);
-    border-radius: 20px;
-    color: var(--forest);
-    font-size: 12.5px;
-    font-family: Roboto, sans-serif;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: left;
-    width: fit-content;
-  }
-
-  .suggestion-btn:hover {
-    background: var(--light-80);
-    border-color: var(--bright);
-  }
-
-  /* ── MESSAGE ROWS ── */
-  .msg-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    animation: fadeUp 0.3s ease;
-  }
+  .suggestion-btn { padding: 8px 16px; background: var(--white); border: 1px solid var(--light-green); border-radius: 20px; color: var(--forest); font-size: 12.5px; font-family: Roboto, sans-serif; cursor: pointer; transition: all 0.2s; text-align: left; width: fit-content; }
+  .suggestion-btn:hover { background: var(--light-80); border-color: var(--bright); }
+  .msg-row { display: flex; align-items: flex-start; gap: 10px; animation: fadeUp 0.3s ease; }
   .msg-row.user { flex-direction: row-reverse; }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(8px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .avatar {
-    width: 30px; height: 30px;
-    border-radius: var(--radius);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 600;
-    flex-shrink: 0; margin-top: 2px;
-  }
-
-  .avatar.bot {
-    background: var(--forest);
-    color: var(--white);
-    font-family: Georgia, serif;
-    font-size: 13px;
-  }
-
-  .avatar.user {
-    background: var(--light-80);
-    border: 1px solid var(--light-green);
-    color: var(--forest);
-    font-size: 10px;
-  }
-
-  .bubble {
-    max-width: calc(100% - 80px);
-    padding: 11px 14px;
-    border-radius: var(--radius);
-    line-height: 1.6;
-    font-size: 13.5px;
-    word-break: break-word;
-    white-space: pre-wrap;
-  }
-
-  .bubble.bot {
-    background: var(--white);
-    border: 1px solid var(--light-grey);
-    color: var(--dark);
-    border-top-left-radius: 3px;
-  }
-
-  .bubble.user {
-    background: var(--forest);
-    color: var(--white);
-    border-top-right-radius: 3px;
-  }
-
-  /* Sources */
-  .sources { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-  .source-chip {
-    display: flex; align-items: center; gap: 4px;
-    padding: 3px 9px;
-    border-radius: 20px;
-    background: var(--mint-80);
-    border: 1px solid var(--mint);
-    font-size: 11px;
-    color: var(--forest);
-  }
-
-  /* Thinking */
-  .thinking {
-    display: flex; align-items: center; gap: 5px;
-    padding: 10px 14px;
-    background: var(--white);
-    border: 1px solid var(--light-grey);
-    border-radius: var(--radius);
-    border-top-left-radius: 3px;
-    max-width: 80px;
-  }
-
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .avatar { width: 30px; height: 30px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; flex-shrink: 0; margin-top: 2px; }
+  .avatar.bot { background: var(--forest); color: var(--white); font-family: Georgia, serif; font-size: 13px; }
+  .avatar.user { background: var(--light-80); border: 1px solid var(--light-green); color: var(--forest); font-size: 10px; }
+  .bubble { max-width: calc(100% - 80px); padding: 11px 14px; border-radius: var(--radius); line-height: 1.6; font-size: 13.5px; word-break: break-word; white-space: pre-wrap; }
+  .bubble.bot { background: var(--white); border: 1px solid var(--light-grey); color: var(--dark); border-top-left-radius: 3px; }
+  .bubble.user { background: var(--forest); color: var(--white); border-top-right-radius: 3px; }
+  .thinking { display: flex; align-items: center; gap: 5px; padding: 10px 14px; background: var(--white); border: 1px solid var(--light-grey); border-radius: var(--radius); border-top-left-radius: 3px; max-width: 80px; }
   .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--bright); animation: bounce 1.2s infinite; }
   .dot:nth-child(2) { animation-delay: 0.2s; }
   .dot:nth-child(3) { animation-delay: 0.4s; }
   @keyframes bounce { 0%,80%,100%{transform:translateY(0);opacity:0.4} 40%{transform:translateY(-5px);opacity:1} }
-
-  /* Error */
-  .error-msg {
-    font-size: 12.5px; color: #b91c1c;
-    padding: 8px 12px;
-    background: #fef2f2;
-    border: 1px solid #fecaca;
-    border-radius: var(--radius);
-    margin-top: 6px;
-  }
-
-  /* ── INPUT ── */
-  .input-area {
-    padding: 12px 16px 16px;
-    background: var(--white);
-    border-top: 1px solid var(--light-grey);
-    flex-shrink: 0;
-  }
-
-  .input-wrap {
-    display: flex; align-items: flex-end; gap: 10px;
-    background: #f8faf9;
-    border: 1px solid var(--light-grey);
-    border-radius: var(--radius);
-    padding: 10px 12px;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-
-  .input-wrap:focus-within {
-    border-color: var(--forest);
-    box-shadow: 0 0 0 3px rgba(57,116,103,0.12);
-  }
-
-  textarea {
-    flex: 1; background: transparent; border: none; outline: none;
-    color: var(--dark);
-    font-family: Roboto, sans-serif;
-    font-size: 13.5px; line-height: 1.5;
-    resize: none; max-height: 120px; min-height: 22px; overflow-y: auto;
-  }
-
+  .error-msg { font-size: 12.5px; color: #b91c1c; padding: 8px 12px; background: #fef2f2; border: 1px solid #fecaca; border-radius: var(--radius); margin-top: 6px; }
+  .input-area { padding: 12px 16px 16px; background: var(--white); border-top: 1px solid var(--light-grey); flex-shrink: 0; }
+  .input-wrap { display: flex; align-items: flex-end; gap: 10px; background: #f8faf9; border: 1px solid var(--light-grey); border-radius: var(--radius); padding: 10px 12px; transition: border-color 0.2s, box-shadow 0.2s; }
+  .input-wrap:focus-within { border-color: var(--forest); box-shadow: 0 0 0 3px rgba(57,116,103,0.12); }
+  textarea { flex: 1; background: transparent; border: none; outline: none; color: var(--dark); font-family: Roboto, sans-serif; font-size: 13.5px; line-height: 1.5; resize: none; max-height: 120px; min-height: 22px; overflow-y: auto; }
   textarea::placeholder { color: var(--light-grey); }
-
-  .send-btn {
-    width: 32px; height: 32px;
-    border-radius: var(--radius);
-    background: var(--forest);
-    border: none; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.2s; flex-shrink: 0; margin-bottom: 1px;
-  }
-
+  .send-btn { width: 32px; height: 32px; border-radius: var(--radius); background: var(--forest); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; margin-bottom: 1px; }
   .send-btn:hover { background: var(--bright); transform: scale(1.05); }
   .send-btn:active { transform: scale(0.97); }
   .send-btn:disabled { background: var(--light-grey); cursor: not-allowed; transform: none; opacity: 0.5; }
   .send-btn svg { width: 15px; height: 15px; stroke: white; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
-
   .input-footer { text-align: center; margin-top: 8px; font-size: 10.5px; color: var(--light-grey); }
   .input-footer span { color: var(--forest); font-weight: 500; }
 </style>
@@ -298,7 +71,6 @@
     </div>
     <div class="status-dot"></div>
   </header>
-
   <div class="messages" id="messages">
     <div class="welcome" id="welcome">
       <div class="welcome-icon">Σ</div>
@@ -312,11 +84,9 @@
       </div>
     </div>
   </div>
-
   <div class="input-area">
     <div class="input-wrap">
-      <textarea id="userInput" placeholder="Ask about your SharePoint…" rows="1"
-        onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+      <textarea id="userInput" placeholder="Ask about your SharePoint…" rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
       <button class="send-btn" id="sendBtn" onclick="sendMessage()">
         <svg viewBox="0 0 24 24"><polyline points="22 2 11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       </button>
@@ -324,11 +94,9 @@
     <div class="input-footer">Powered by <span>ChatGPT</span> · Searches your SharePoint in real time</div>
   </div>
 </div>
-
 <script>
-// ── CONFIG ── Replace with your OpenAI API key
-const OPENAI_API_KEY = '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';
-const MODEL = 'gpt-4o';
+// ── Replace with your Cloudflare Worker URL after deploying ──
+const WORKER_URL = 'YOUR_CLOUDFLARE_WORKER_URL_HERE';
 
 const SYSTEM_PROMPT = `You are a helpful SharePoint AI Assistant for Summa Equity. Help users find information in Summa's SharePoint — documents, files, and folders. Search thoroughly, summarise clearly, and always mention file names when referencing specific documents. If nothing is found, suggest alternative search terms. Always be professional and concise.`;
 
@@ -340,13 +108,7 @@ function handleKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault
 function sendSuggestion(btn) { const text = btn.textContent.replace(/^[\p{Emoji}\s]+/u, '').trim(); document.getElementById('userInput').value = text; sendMessage(); }
 function hideWelcome() { const w = document.getElementById('welcome'); if (w) w.remove(); }
 function scrollToBottom() { const m = document.getElementById('messages'); m.scrollTop = m.scrollHeight; }
-
-function mkAvatar(type) {
-  const el = document.createElement('div');
-  el.className = `avatar ${type}`;
-  el.textContent = type === 'bot' ? 'Σ' : 'You';
-  return el;
-}
+function mkAvatar(type) { const el = document.createElement('div'); el.className = `avatar ${type}`; el.textContent = type === 'bot' ? 'Σ' : 'You'; return el; }
 
 function appendUser(text) {
   hideWelcome();
@@ -355,7 +117,6 @@ function appendUser(text) {
   row.append(mkAvatar('user'), b);
   document.getElementById('messages').appendChild(row); scrollToBottom();
 }
-
 function appendThinking() {
   const row = document.createElement('div'); row.className = 'msg-row bot'; row.id = 'thinkingRow';
   const t = document.createElement('div'); t.className = 'thinking';
@@ -363,9 +124,7 @@ function appendThinking() {
   row.append(mkAvatar('bot'), t);
   document.getElementById('messages').appendChild(row); scrollToBottom();
 }
-
 function removeThinking() { const el = document.getElementById('thinkingRow'); if (el) el.remove(); }
-
 function appendBot(text) {
   removeThinking();
   const row = document.createElement('div'); row.className = 'msg-row bot';
@@ -373,7 +132,6 @@ function appendBot(text) {
   row.append(mkAvatar('bot'), b);
   document.getElementById('messages').appendChild(row); scrollToBottom();
 }
-
 function appendError(msg) {
   removeThinking();
   const el = document.createElement('div'); el.className = 'error-msg'; el.textContent = '⚠ ' + msg;
@@ -385,43 +143,25 @@ async function sendMessage() {
   const sendBtn = document.getElementById('sendBtn');
   const text = input.value.trim();
   if (!text || isLoading) return;
-
   isLoading = true; input.value = ''; input.style.height = 'auto'; sendBtn.disabled = true;
   appendUser(text);
   conversationHistory.push({ role: 'user', content: text });
   appendThinking();
-
   try {
-    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+    const res = await fetch(WORKER_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${OPENAI_API_KEY}`
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: MODEL,
+        model: 'gpt-4o',
         max_tokens: 1000,
-        messages: [
-          { role: 'system', content: SYSTEM_PROMPT },
-          ...conversationHistory
-        ]
+        messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...conversationHistory]
       })
     });
-
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.error?.message || `API error ${res.status}`);
-    }
-
+    if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.error?.message || `API error ${res.status}`); }
     const data = await res.json();
     const replyText = data.choices?.[0]?.message?.content?.trim();
-
-    if (replyText) {
-      appendBot(replyText);
-      conversationHistory.push({ role: 'assistant', content: replyText });
-    } else {
-      appendBot("I couldn't find a clear answer. Try rephrasing your question.");
-    }
+    if (replyText) { appendBot(replyText); conversationHistory.push({ role: 'assistant', content: replyText }); }
+    else { appendBot("I couldn't find a clear answer. Try rephrasing your question."); }
   } catch (err) {
     appendError(err.message || 'Something went wrong. Please try again.');
   } finally {
@@ -431,4 +171,3 @@ async function sendMessage() {
 </script>
 </body>
 </html>
-
